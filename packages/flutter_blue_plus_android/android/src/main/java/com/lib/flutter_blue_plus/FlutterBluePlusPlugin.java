@@ -689,6 +689,9 @@ public class FlutterBluePlusPlugin implements
                     String remoteId =    (String) args.get("remote_id");
                     boolean autoConnect = ((int) args.get("auto_connect")) != 0;
 
+                    int connectionPriority = args.containsKey("connection_priority") ? (int) args.get("connection_priority") : 0;
+
+
                     ArrayList<String> permissions = new ArrayList<>();
 
                     if (Build.VERSION.SDK_INT >= 31) { // Android 12 (October 2021)
@@ -749,6 +752,10 @@ public class FlutterBluePlusPlugin implements
                         if (gatt == null) {
                             result.error("connect", "device.connectGatt returned null", null);
                             return;
+                        }
+
+                        if(connectionPriority != null){
+                             gatt.requestConnectionPriority(connectionPriority);
                         }
 
                         // add to currently connecting peripherals
