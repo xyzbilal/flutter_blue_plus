@@ -215,16 +215,20 @@ class BmScanResponse {
 class BmConnectRequest {
   DeviceIdentifier remoteId;
   bool autoConnect;
+  int connectionPriority;
 
   BmConnectRequest({
     required this.remoteId,
     required this.autoConnect,
+    required this.connectionPriority,
+
   });
 
   Map<dynamic, dynamic> toMap() {
     final Map<dynamic, dynamic> data = {};
     data['remote_id'] = remoteId.str;
     data['auto_connect'] = autoConnect ? 1 : 0;
+    data['connection_priority'] = connectionPriority;
     return data;
   }
 }
