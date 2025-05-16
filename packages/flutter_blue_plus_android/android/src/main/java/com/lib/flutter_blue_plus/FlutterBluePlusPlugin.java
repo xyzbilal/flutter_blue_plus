@@ -754,9 +754,9 @@ public class FlutterBluePlusPlugin implements
                             return;
                         }
 
-                        if(connectionPriority != null){
+                     
                              gatt.requestConnectionPriority(connectionPriority);
-                        }
+                     
 
                         // add to currently connecting peripherals
                         mCurrentlyConnectingDevices.put(remoteId, gatt);
