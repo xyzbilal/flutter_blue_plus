@@ -88,19 +88,29 @@ class BluetoothDevice {
   /// Returns true if this device is currently disconnected from your app
   bool get isDisconnected => isConnected == false;
 
-  /// Establishes a connection to the Bluetooth Device.
-  ///   [timeout] if timeout occurs, cancel the connection request and throw exception
-  ///   [mtu] Android only. Request a larger mtu right after connection, if set.
-  ///   [autoConnect] reconnect whenever the device is found
-  ///      - if true, this function always returns immediately.
-  ///      - you must listen to `connectionState` to know when connection occurs.
-  ///      - auto connect is turned off by calling `disconnect`
-  ///      - auto connect results in a slower connection process compared to a direct connection
-  ///        because it relies on the internal scheduling of background scans.
+    /// Establishes a connection to the Bluetooth Device.
+  /// 
+  /// [timeout] if timeout occurs, cancel the connection request and throw exception
+  ///
+  /// [mtu] Android only. Request a larger mtu right after connection, if set.
+  ///
+  /// [autoConnect] reconnect whenever the device is found
+  ///   - if true, this function always returns immediately.
+  ///   - you must listen to `connectionState` to know when connection occurs.
+  ///   - auto connect is turned off by calling `disconnect`
+  ///   - auto connect results in a slower connection process compared to a direct connection
+  ///     because it relies on the internal scheduling of background scans.
+  ///
+  /// [connectionPriority] Android only.
+  ///   - 0 = CONNECTION_PRIORITY_BALANCED ⚖️ (default): balanced mode, normal data throughput with moderate energy usage.
+  ///   - 1 = CONNECTION_PRIORITY_HIGH 🚀: high priority mode, enables faster data transfer by reducing connection interval, uses more battery.
+  ///   - 2 = CONNECTION_PRIORITY_LOW_POWER 💤: low power mode, increases latency to reduce power consumption, suitable for background or infrequent communication.
+
   Future<void> connect({
     Duration timeout = const Duration(seconds: 35),
     int? mtu = 512,
     bool autoConnect = false,
+    int connectionPriority = 0
   }) async {
     // If you hit this assert, you must set `mtu:null`, i.e `device.connect(mtu:null, autoConnect:true)`
     // and you'll have to call `requestMtu` yourself. `autoConnect` is not compatibile with `mtu`.
