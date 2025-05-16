@@ -131,9 +131,10 @@ class BluetoothDevice {
         FlutterBluePlus._autoConnect.add(remoteId);
       }
 
-      var request = BmConnectRequest(
+       var request = BmConnectRequest(
         remoteId: remoteId,
         autoConnect: autoConnect,
+        connectionPriority: connectionPriority
       );
 
       var responseStream = FlutterBluePlusPlatform
